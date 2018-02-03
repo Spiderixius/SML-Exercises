@@ -3,6 +3,12 @@ source("loadImage.R")
 # Good old OOP, never disappoints
 library(class)
 
+###########################
+###########################
+## Exercise 1.4.1 to 14.2 ##
+###########################
+###########################
+
 # Load images into a data frame for 100 DPI, group4 and member0
 data <- loadSinglePersonsData(100, 4, 0, "C:/Users/spider/Documents/Software Engineering/8th Semester/SML-Exercises/admur13_exercise1/group")
 df <- data.frame(data)
@@ -42,13 +48,24 @@ accuracies <- c()
 # Lets do it from 1 to a high number of K's
 K <- 1:50
 
+# Timestamp
+start_time <- Sys.time()
+# Iterate from 1 to 50
 for (i in K) {
   prediction <- knn(training_set, test_set, training_labels, i)
   accuracies[i] <- getAccuracy(prediction, test_labels)
 }
+# Stop time
+stop_time <- Sys.time()
+duration <- stop_time - start_time
+duration
 
 accuracies
 
 write(accuracies, file = "accuracy_output.txt", sep = "\n")
 
 plot(K, accuracies)
+
+
+
+
