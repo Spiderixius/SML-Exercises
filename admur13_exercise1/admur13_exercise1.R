@@ -19,7 +19,7 @@ test_set <- df_shuffle[2001:4000, -1]
 test_labels <- df_shuffle[2001:4000, 1]
 
 # Time to test the training data against the test set with a K = 5
-probability <- knn(training_set, test_set, training_labels, 5)
+prediction <- knn(training_set, test_set, training_labels, 5)
 
 # Function provided by Frederik/Nörbert to get the accuracy of the test.
 getAccuracy <- function(testLabels, testPredictions) {
@@ -34,14 +34,21 @@ getAccuracy <- function(testLabels, testPredictions) {
 }
 
 # Shows the accuracy
-getAccuracy(test_labels, probability)
+getAccuracy(test_labels, prediction)
 
 # Lets have a collection of accuracies for varying K's
 accuracies <- c()
 
-for (i in 1:10) {
-  probability <- knn(training_set, test_set, training_labels, i)
-  accuracies <- append(accuracies, c(i, getAccuracy(test_labels, probability)))
+# Lets do it from 1 to a high number of K's
+K <- 1:50
+
+for (i in K) {
+  prediction <- knn(training_set, test_set, training_labels, i)
+  accuracies[i] <- getAccuracy(prediction, test_labels)
 }
 
 accuracies
+
+write(accuracies, file = "accuracy_output.txt", sep = "\n")
+
+plot(K, accuracies)
