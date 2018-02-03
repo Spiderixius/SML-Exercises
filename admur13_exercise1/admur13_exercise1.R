@@ -4,7 +4,7 @@ source("loadImage.R")
 library(class)
 
 # Load images into a data frame for 100 DPI, group4 and member0
-data <- loadSinglePersonsData(100, 4, 0, "C:/Users/spider/Documents/Software Engineering/8th Semester/SML/admur13_exercise1/group")
+data <- loadSinglePersonsData(100, 4, 0, "C:/Users/spider/Documents/Software Engineering/8th Semester/SML-Exercises/admur13_exercise1/group")
 df <- data.frame(data)
 
 # Shuffle the dataset with a specific seed for recreatable reasons.
