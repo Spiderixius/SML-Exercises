@@ -1,0 +1,79 @@
+/build/
+build_*/
+build-*/
+*-build/
+qtcreator-build
+.DS_Store
+src/gwt/www/js/acesupport.js
+src/gwt/www/js/ace.js
+src/gwt/src/org/rstudio/studio/client/workbench/views/source/editors/text/ace/acesupport.js
+src/gwt/src/org/rstudio/core/client/jsonrpc/json2.min.js
+src/gwt/www/js/json2.min.js
+src/gwt/tools/ace/
+src/gwt/tools/pdfjs/
+src/gwt/tools/xterm.js/
+src/gwt/.ant-targets-build.xml
+/src/gwt/.gwt/.gwt-log
+.Rproj.user
+.Rhistory
+.RData
+.Rprofile
+/src/gwt/bin.test/
+/src/gwt/gwt-unitCache/
+NEWS.html
+CONTRIBUTING.html
+CMakeLists.txt.user
+.idea/
+**/\.tern-port
+.#*
+*.autosave
+*~
+*swp
+.orig
+.vagrant
+tags
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+
+
+# Created by https://www.gitignore.io/api/r
+
+### R ###
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# Example code in package build process
+*-Ex.R
+
+# Output files from R CMD build
+/*.tar.gz
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+.httr-oauth
+
+# knitr and R markdown default cache directories
+/*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+
+
+# End of https://www.gitignore.io/api/r
