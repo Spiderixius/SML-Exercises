@@ -4,9 +4,12 @@
 # About
 This repository will contains R code on statistical machine learning exercises.
 
-### Exercises 1 - KNN on handwritten digits 
+### Exercise 1 - KNN on handwritten digits 
 
 "0" and "8" were the hardest to write 400 times each :'(
+
+### Exercise 2 - PCA on handwritten digits
+TODO
 
 # How to
 Can be opened with [R](https://www.r-project.org/)/[RStudio](https://www.rstudio.com/).
