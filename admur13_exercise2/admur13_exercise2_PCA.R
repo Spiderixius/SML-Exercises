@@ -135,7 +135,7 @@ acc(model, dataset.test.labels)
 ##### Exercise 2.2.1 #####
 #Normalization After PCA 
 #If Normalization has to happen before PCA is run, normalize the dataset before that.
-numberOfPCs <- 1:34 #The number of PCs.
+numberOfPCs <- 1:14 #The number of PCs.
 PCA.dataset <- normalize(PCA.obj$x) #The best Dataset from Exercise 2.1.3 (95 % of accumulated variance with k-value of 5)
 
 folds <- createFolds(PCA.dataset, 10)
@@ -148,7 +148,7 @@ for(i in 1:length(folds)){
   cross.train <- cross.train[,numberOfPCs]
   #cross.test <- PCA.dataset[folds[[i]],]
   
-  cross.train.labels <- dataset.train.labels[cross.train] ####################  SPØRGER FREDERIK
+  cross.train.labels <- dataset.train.labels[-folds[[i]]] ####################  SPØRGER FREDERIK
   
   test <- dataset.test
   cross.test <- predict(PCA.obj,test)
@@ -193,12 +193,13 @@ image(imageM)
 
 ##### Exercise 2.3.2 #####
 # Plot the first 10 eigenvectors and plot as images
-PCA.obj$rotation[,1]
+eigenVector <- 1:10
 
-imageSize <- sqrt(ncol(PCA.obj) -1)
-imageM <- matrix(PCA.obj$rotation[,1],nrow =
-                    imageSize,ncol = imageSize,byrow = FALSE)
-image(imageM)
+#PCA.obj$rotation[,eigenVector]
+for (e in eigenVector) {
+  imageNewM <- matrix(PCA.obj$rotation[,e],nrow = imageSize,ncol = imageSize,byrow = FALSE)
+  image(imageNewM)
+}
 
 ##### Exercise 2.3.3 #####
 
