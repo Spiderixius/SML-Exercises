@@ -20,7 +20,8 @@ getAllData <- function(dataList){
   return(idList)
 }
 
-folder<- "../../../data/trunk/preProcessed/2018/group"
+#folder<- "../../../data/trunk/preProcessed/2018/group"
+folder <- "C:/Users/spider/Documents/StatisticML/preProcessed/2018/group"
 
 datalist <- list(  list( 1) ,list( 1, 2 ), list( 1, 2, 3 ),   list( 1, 2, 3 ), list( 1, 0, 4, 2, 3 ), 
                    list( 1, 5, 4, 2, 3 ), list( 0, 2, 3 ), list( 1 ), list( 1, 2, 3 ), list( 1, 2, 3 ), 
@@ -159,7 +160,7 @@ for(i in 1:length(folds)){
   time.end <- Sys.time()
   
   s[i] <- time.end - time.start
-  a[i] <- acc(model, normalize(dataset.test.labels)) #accuracy
+  a[i] <- acc(model, normalize(dataset.test)) #accuracy
   
 }
 
@@ -176,9 +177,10 @@ mean(s)
 DPI <- 100
 group <- 4
 member <- 0
-folder <- "../../../data/trunk/preProcessed/2018/group"
+#folder <- "../../../data/trunk/preProcessed/2018/group"
+folder <- "C:/Users/spider/Documents/StatisticML/preProcessed/2018/group"
 
-cipherNumber <- 1222
+cipherNumber <- 1001
 
 rotateSelf <- function(x) t(apply(x, 2, rev))
 
@@ -203,6 +205,12 @@ for (e in eigenVector) {
 
 ##### Exercise 2.3.3 #####
 
+trunc <- PCA.obj$x[cipherNumber,1:nrow(PCA.obj$rotation)] %*%
+  t(PCA.obj$rotation[,1:nrow(PCA.obj$rotation)])
+
+trunc <- scale(trunc, center = -1 * PCA.obj$center, scale=FALSE)
+
+image(trunc)
 ##### Exercise 2.3.4 #####
 
 ##### Exercise 2.3.5 #####
