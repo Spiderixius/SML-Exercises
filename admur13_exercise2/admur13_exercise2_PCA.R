@@ -2,7 +2,7 @@
 #Source image read
 source("loadImage.R")
 source("Methods.R")
-source("loadAll.R")
+#source("loadAll.R")
 
 #Get all data from folder
 getAllData <- function(dataList){
@@ -21,22 +21,23 @@ getAllData <- function(dataList){
 }
 
 #folder<- "../../../data/trunk/preProcessed/2018/group"
-folder <- "C:/Users/spider/Documents/StatisticML/preProcessed/2018/group"
+#folder <- "C:/Users/spider/Documents/StatisticML/preProcessed/2018/group"
+folder <- "c:/Users/Anna/svn/trunk/preProcessed/2018/group"
 
-datalist <- list(  list( 1) ,list( 1, 2 ), list( 1, 2, 3 ),   list( 1, 2, 3 ), list( 1, 0, 4, 2, 3 ), 
-                   list( 1, 5, 4, 2, 3 ), list( 0, 2, 3 ), list( 1 ), list( 1, 2, 3 ), list( 1, 2, 3 ), 
-                   list( 1, 2, 3 ), list( 1, 4, 2, 3 ), list( 1, 2, 3 ), list( 1, 2 ), list( 1, 2, 3 ), 
-                   list( 1, 2 ), list( 1, 4, 2, 3 ), list( 1, 4, 2, 3 ), list( 1, 2, 3 ))
+datalist <- list( list( 1 ) ,list( 1, 2 ), list( 1, 2, 3 ),   list( 1, 2, 3 ), list( 1, 0, 4, 2, 3 ), 
+                  list( 1, 5, 4, 2, 3 ), list( 0, 2, 3 ), list( 1 ), list( 1, 2, 3 ), list( 1, 2, 3 ), 
+                  list( 1, 2, 3 ), list( 1, 4, 2, 3 ), list( 1, 2, 3 ), list( 1, 2 ), list( 1, 2, 3 ), 
+                  list( 1, 2 ), list( 1, 4, 2, 3 ), list( 1, 4, 2, 3 ), list( 1, 2, 3 ))
 
 idList <- getAllData(datalist)
-
+id <- c()
 for(i in 1:length(idList)){
   idTemp <- idList[i]
   idTemp <- data.frame(idTemp)
   id <- as.data.frame(rbind(id,idTemp))
 }
 
-dataset.all <- as.data.frame(id)
+dataset <- as.data.frame(id)
 
 ###########################
 ###########################
@@ -63,7 +64,7 @@ dataset.all <- as.data.frame(id)
 
 
 # #All persons
-dataset.all <- datasetShuffle(dataset.all)
+dataset.all <- datasetShuffle(dataset)
 
 #Split data
 train <- 1:(nrow(dataset.all)/2)
@@ -149,7 +150,7 @@ for(i in 1:length(folds)){
   cross.train <- cross.train[,numberOfPCs]
   #cross.test <- PCA.dataset[folds[[i]],]
   
-  cross.train.labels <- dataset.train.labels[-folds[[i]]] ####################  SPØRGER FREDERIK
+  cross.train.labels <- dataset.train.labels[-folds[[i]]] ####################  SPÃRGER FREDERIK
   
   test <- dataset.test
   cross.test <- predict(PCA.obj,test)
@@ -173,25 +174,44 @@ mean(s)
 ###########################
 ###########################
 
+PCA.obj <- prcomp(dataset[train,-1])
+
 ##### Exercise 2.3.1 #####
 DPI <- 100
 group <- 4
 member <- 0
 #folder <- "../../../data/trunk/preProcessed/2018/group"
-folder <- "C:/Users/spider/Documents/StatisticML/preProcessed/2018/group"
-
-cipherNumber <- 1001
+#folder <- "C:/Users/spider/Documents/StatisticML/preProcessed/2018/group"
 
 rotateSelf <- function(x) t(apply(x, 2, rev))
-
 id <- loadSinglePersonsData(DPI,group,member,folder)
-imageSize <- sqrt(ncol(id) - 1)
-imageM <- matrix( id[cipherNumber,2:ncol(id)],nrow =
-                    imageSize,ncol = imageSize,byrow = FALSE)
+cipherImage <- function(cipherNumber) {
+  imageM <- matrix( id[cipherNumber,2:ncol(id)],nrow =
+                      imageSize,ncol = imageSize,byrow = FALSE)
+  imageM <- rotateSelf(imageM) # rotate is a function to rotate the image
+  image(imageM) 
+}
 
-imageM <- rotateSelf(imageM) # rotate is a function to rotate the image
-
-image(imageM)
+# cipher 0
+cipherImage(100)
+# cipher 1
+cipherImage(500)
+# cipher 2
+cipherImage(1001)
+# cipher 3
+cipherImage(1201)
+# cipher 4
+cipherImage(1601)
+# cipher 5
+cipherImage(2201)
+# cipher 6
+cipherImage(2601)
+# cipher 7
+cipherImage(3001)
+# cipher 8
+cipherImage(3401)
+# cipher 9
+cipherImage(3800)
 
 ##### Exercise 2.3.2 #####
 # Plot the first 10 eigenvectors and plot as images
@@ -202,16 +222,87 @@ for (e in eigenVector) {
   imageNewM <- matrix(PCA.obj$rotation[,e],nrow = imageSize,ncol = imageSize,byrow = FALSE)
   image(imageNewM)
 }
+#image(matrix(PCA.obj$rotation[,1],nrow = imageSize,ncol = imageSize,byrow = FALSE))
 
 ##### Exercise 2.3.3 #####
+reconstructed <- function(cipherNumber) {
+  trunc <- PCA.obj$x[cipherNumber,1:nrow(PCA.obj$rotation)] %*%
+    t(PCA.obj$rotation[,1:nrow(PCA.obj$rotation)])
+  trunc <- scale(trunc, center = -1 * PCA.obj$center, scale=FALSE)
+  testPic <- matrix(trunc,nrow=imageSize,ncol=imageSize,byrow=FALSE)
+  testPic <- rotateSelf(testPic)
+  image(testPic) 
+}
+# cipher 0
+reconstruct(100)
+# cipher 1
+reconstruct(500)
+# cipher 2
+reconstruct(1001)
+# cipher 3
+reconstruct(1201)
+# cipher 4
+reconstruct(1601)
+# cipher 5
+reconstruct(2201)
+# cipher 6
+reconstruct(2601)
+# cipher 7
+reconstruct(3001)
+# cipher 8
+reconstruct(3401)
+# cipher 9
+reconstruct(3800)
 
-trunc <- PCA.obj$x[cipherNumber,1:nrow(PCA.obj$rotation)] %*%
-  t(PCA.obj$rotation[,1:nrow(PCA.obj$rotation)])
-
-trunc <- scale(trunc, center = -1 * PCA.obj$center, scale=FALSE)
-
-image(trunc)
 ##### Exercise 2.3.4 #####
+cumPic <- function(noPCA, cipherNumber) {
+  trunc <- PCA.obj$x[cipherNumber,1:noPCA] %*%
+    t(PCA.obj$rotation[,1:noPCA])
+  trunc <- scale(trunc, center = -1 * PCA.obj$center, scale=FALSE)
+  testPic <- matrix(trunc,nrow=imageSize,ncol=imageSize,byrow=FALSE)
+  testPic <- rotateSelf(testPic)
+  image(testPic)  
+}
+cumPic(14, 1001)
+cumPic(23, 1001)
+cumPic(34, 1001)
+cumPic(14, 1601)
+cumPic(23, 1601)
+cumPic(34, 1601)
 
 ##### Exercise 2.3.5 #####
+cipherNumber <- 43
+cumPic(10)
+plot(PCA.obj$x[cipherNumber,1:10], ylim=c(-1,0.5), col="red")
+cipherNumber <- 456
+cumPic(10)
+plot(PCA.obj$x[cipherNumber,1:10])
+points(PCA.obj$x[cipherNumber,1:10], col="green")
+biplot(PCA.obj[1:10])
+?prcomp
+summary(PCA.obj)
 
+# cipher 2
+cipherNumber <- 1001
+PCA.obj$x[cipherNumber, 1:10]
+# cipher 0
+cipherNumber <- 400
+PCA.obj$x[cipherNumber, 1:10]
+#Mean
+# cipher 2
+no <- 1:10
+result2 <- c()
+result2_2 <- c()
+for (a in no) {
+  result2[a] <- mean(PCA.obj$x[801:1200, a]) 
+  result2_2[a] <- mean(PCA.obj$rotation[, a])
+}
+result2
+#result2_2
+
+# cipher 0
+result1 <- c()
+for (a in no) {
+  result1[a] <- mean(PCA.obj$x[1:400, a])  
+}
+result1
